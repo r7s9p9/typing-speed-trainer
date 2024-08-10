@@ -11,6 +11,7 @@ import { routes } from "../constants.ts";
 import { NoMatch } from "../components/NoMatch/NoMatch.tsx";
 import { Home } from "../components/Home/Home.tsx";
 import { ErrorHome } from "../components/Home/ErrorHome.tsx";
+import { StoreProvider } from "../shared/store/StoreProvider.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <StoreProvider>
+      <RouterProvider router={router} />
+    </StoreProvider>
   </React.StrictMode>
 );
