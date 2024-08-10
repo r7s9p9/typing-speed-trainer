@@ -12,6 +12,7 @@ import { NoMatch } from "../components/NoMatch/NoMatch.tsx";
 import { Home } from "../components/Home/Home.tsx";
 import { ErrorHome } from "../components/Home/ErrorHome.tsx";
 import { StoreProvider } from "../shared/store/StoreProvider.tsx";
+import { Score } from "../components/Home/Score/Score.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,7 +23,13 @@ const router = createBrowserRouter(
         id={routes.home.id}
         element={<Home />}
         errorElement={<ErrorHome />}
-      />
+      >
+        <Route
+          path={routes.score.path}
+          id={routes.score.id}
+          element={<Score />}
+        />
+      </Route>
     </>
   )
 );

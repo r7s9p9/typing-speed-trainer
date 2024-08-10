@@ -8,11 +8,6 @@ export function getNumber(value: string | number) {
   return value;
 }
 
-export function getRandomBoolean(chance: number = 0.5): boolean {
-  if (!isNumeric(chance) || chance < 0 || chance > 1) {
-    console.error("Chance must be a finite number between 0 and 1");
-    return false;
-  }
-
-  return Math.random() < chance;
+export function formatNumber(number: number, digitsAfterPoint: number = 2) {
+  return (Math.round(number * 100) / 100).toFixed(digitsAfterPoint);
 }

@@ -4,6 +4,7 @@ import {
   useContext,
   useState,
   MutableRefObject,
+  useCallback,
 } from "react";
 import { TIMER_SECONDS_COUNT } from "../../constants";
 
@@ -19,6 +20,9 @@ type StoreType = {
     isStarted: boolean;
     countdown: number;
   };
+  letterRef: MutableRefObject<HTMLLIElement> | undefined;
+  inputRef: MutableRefObject<HTMLInputElement> | undefined;
+  cursorRef: MutableRefObject<HTMLDivElement> | undefined;
 };
 
 const storeInit = {
@@ -34,6 +38,9 @@ const storeInit = {
       isStarted: false,
       countdown: TIMER_SECONDS_COUNT,
     },
+    letterRef: undefined as StoreType["letterRef"],
+    inputRef: undefined as StoreType["inputRef"],
+    cursorRef: undefined as StoreType["cursorRef"],
   },
   updateStore: (_value: Partial<StoreType>) => {},
   resetStore: () => {},
@@ -50,9 +57,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setStore((prevState) => ({ ...prevState, ...value }));
   };
 
-  const resetStore = () => {
+  const resetStore = useCallback(() => {
     setStore(storeInit["store"]);
-  };
+  }, [store, storeInit]);
 
   return (
     <StoreContext.Provider value={{ store, updateStore, resetStore }}>

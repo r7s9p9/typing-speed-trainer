@@ -9,9 +9,15 @@ export function Header() {
   };
 
   return (
-    <div className="h-12 w-full px-2 flex items-center gap-2 border-b-2 border-slate-400 bg-slate-300">
+    <div className="h-12 w-full px-4 flex items-center gap-2 border-b-2 border-slate-400 bg-slate-300">
       <IconKeyboard {...iconProps} />
-      <Text size="xl" font="light" uppercase letterSpacing className="m-auto">
+      <Text
+        size="xl"
+        font="light"
+        uppercase
+        letterSpacing
+        className="m-auto text-slate-600"
+      >
         Typing Trainer
       </Text>
     </div>
