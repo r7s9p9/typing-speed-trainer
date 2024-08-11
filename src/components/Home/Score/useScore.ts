@@ -14,7 +14,6 @@ export function useScore() {
   const { store } = useStore();
 
   const time = TIMER_SECONDS_COUNT - store.timer.countdown;
-  const accuracy = formatNumber((store.count.correct / store.count.all) * 100);
   const minutes = time / CALC_MINUTE;
   const wpm = formatNumber(store.count.correct / CALC_WORD_LENGTH / minutes);
 
@@ -28,7 +27,7 @@ export function useScore() {
   });
 
   return {
-    score: { time, accuracy, wpm },
+    score: { time, wpm, mistakes: store.count.error },
     contentRef,
     overlayRef,
     onClose,

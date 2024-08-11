@@ -20,7 +20,7 @@ export function Score() {
           Time: {score.time} seconds
         </Text>
         <Text size="xl" font="light">
-          Accuracy: {score.accuracy}%
+          Mistakes: {score.mistakes}
         </Text>
       </div>
     </Popup>
