@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, MutableRefObject } from "react";
 import { useStore } from "../store/StoreProvider";
 import { TIMER_SECONDS_COUNT } from "../../constants";
 
 export function useTimer({
   onTimerTimeout,
+  timerRef,
 }: {
   onTimerTimeout: ReturnType<typeof Function>;
+  timerRef: MutableRefObject<HTMLDivElement>;
 }) {
   const { store, updateStore } = useStore();
   const timer = store.timer;
@@ -14,7 +16,6 @@ export function useTimer({
     if (timer.countdown > 0) {
       updateStore({
         timer: {
-          ...store.timer,
           isStarted: true,
           countdown: timer.countdown - 1,
         },
@@ -26,39 +27,36 @@ export function useTimer({
   }
 
   function stopTimer() {
-    if (!timer.ref) return;
+    if (!timerRef) return;
     updateStore({
       timer: {
-        ref: store.timer.ref,
         isStarted: false,
         countdown: timer.countdown,
       },
     });
-    timer.ref.current.style.opacity = "0";
+    timerRef.current.style.opacity = "0";
   }
 
   function resetTimer() {
-    if (!timer.ref) return;
+    if (!timerRef) return;
     updateStore({
       timer: {
-        ref: store.timer.ref,
         isStarted: false,
         countdown: TIMER_SECONDS_COUNT,
       },
     });
-    timer.ref.current.style.opacity = "0";
+    timerRef.current.style.opacity = "0";
   }
 
   function startTimer() {
-    if (!timer.ref) return;
+    if (!timerRef) return;
     updateStore({
       timer: {
-        ref: store.timer.ref,
         isStarted: true,
         countdown: timer.countdown,
       },
     });
-    timer.ref.current.style.opacity = "1";
+    timerRef.current.style.opacity = "1";
   }
 
   useEffect(() => {

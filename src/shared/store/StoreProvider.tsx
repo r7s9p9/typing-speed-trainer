@@ -1,10 +1,4 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useState,
-  MutableRefObject,
-} from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 import { TIMER_SECONDS_COUNT } from "../../constants";
 
 type StoreType = {
@@ -15,7 +9,6 @@ type StoreType = {
     correct: number;
   };
   timer: {
-    ref: MutableRefObject<HTMLDivElement> | undefined;
     isStarted: boolean;
     countdown: number;
   };
@@ -30,7 +23,6 @@ const storeInit = {
       correct: 0,
     },
     timer: {
-      ref: undefined as StoreType["timer"]["ref"],
       isStarted: false,
       countdown: TIMER_SECONDS_COUNT,
     },

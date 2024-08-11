@@ -10,7 +10,7 @@ export function useHome() {
   const { store, updateStore, resetStore } = useStore();
   const { updateWords } = useUpdateWords();
 
-  store.timer.ref = useRef() as MutableRefObject<HTMLDivElement> | undefined;
+  const timerRef = useRef() as MutableRefObject<HTMLDivElement>;
   const letterRef = useRef() as MutableRefObject<HTMLLIElement>;
   const cursorRef = useRef() as MutableRefObject<HTMLDivElement>;
   const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
@@ -19,6 +19,7 @@ export function useHome() {
 
   const { startTimer, stopTimer, resetTimer } = useTimer({
     onTimerTimeout: onFinish,
+    timerRef,
   });
 
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -82,7 +83,7 @@ export function useHome() {
     onKeyDown,
     inputRef,
     cursorRef,
-    timerRef: store.timer.ref as MutableRefObject<HTMLDivElement>,
+    timerRef,
     timerSeconds: store.timer.countdown,
     onRestart,
   };
