@@ -13,6 +13,7 @@ import { Home } from "../components/Home/Home.tsx";
 import { ErrorHome } from "../components/Home/ErrorHome.tsx";
 import { StoreProvider } from "../shared/store/StoreProvider.tsx";
 import { Score } from "../components/Home/Score/Score.tsx";
+import { ErrorScore } from "../components/Home/Score/ErrorScore.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
           path={routes.score.path}
           id={routes.score.id}
           element={<Score />}
+          errorElement={<ErrorScore />}
         />
       </Route>
     </>
