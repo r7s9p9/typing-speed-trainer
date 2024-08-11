@@ -4,7 +4,6 @@ import {
   useContext,
   useState,
   MutableRefObject,
-  useCallback,
 } from "react";
 import { TIMER_SECONDS_COUNT } from "../../constants";
 
@@ -42,12 +41,14 @@ const storeInit = {
     inputRef: undefined as StoreType["inputRef"],
     cursorRef: undefined as StoreType["cursorRef"],
   },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateStore: (_value: Partial<StoreType>) => {},
   resetStore: () => {},
 };
 
 const StoreContext = createContext(storeInit);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useStore = () => useContext(StoreContext);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
@@ -57,9 +58,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setStore((prevState) => ({ ...prevState, ...value }));
   };
 
-  const resetStore = useCallback(() => {
+  const resetStore = () => {
     setStore(storeInit["store"]);
-  }, [store, storeInit]);
+  };
 
   return (
     <StoreContext.Provider value={{ store, updateStore, resetStore }}>
