@@ -19,9 +19,6 @@ type StoreType = {
     isStarted: boolean;
     countdown: number;
   };
-  letterRef: MutableRefObject<HTMLLIElement> | undefined;
-  inputRef: MutableRefObject<HTMLInputElement> | undefined;
-  cursorRef: MutableRefObject<HTMLDivElement> | undefined;
 };
 
 const storeInit = {
@@ -37,9 +34,6 @@ const storeInit = {
       isStarted: false,
       countdown: TIMER_SECONDS_COUNT,
     },
-    letterRef: undefined as StoreType["letterRef"],
-    inputRef: undefined as StoreType["inputRef"],
-    cursorRef: undefined as StoreType["cursorRef"],
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateStore: (_value: Partial<StoreType>) => {},

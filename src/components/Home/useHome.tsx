@@ -11,9 +11,9 @@ export function useHome() {
   const { updateWords } = useUpdateWords();
 
   store.timer.ref = useRef() as MutableRefObject<HTMLDivElement> | undefined;
-  store.letterRef = useRef() as MutableRefObject<HTMLLIElement> | undefined;
-  store.cursorRef = useRef() as MutableRefObject<HTMLDivElement> | undefined;
-  store.inputRef = useRef() as MutableRefObject<HTMLInputElement> | undefined;
+  const letterRef = useRef() as MutableRefObject<HTMLLIElement>;
+  const cursorRef = useRef() as MutableRefObject<HTMLDivElement>;
+  const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
 
   const isTimerStopped = !store.timer.isStarted && store.timer.countdown !== 0;
 
@@ -30,7 +30,7 @@ export function useHome() {
     if (isTimerStopped) startTimer();
 
     const { letterId, isCorrectLetter, isComplete } = letterHandler({
-      letterRef: store.letterRef as MutableRefObject<HTMLLIElement>,
+      letterRef,
       userLetter: e.key,
       lastIndex: store.count.all - 1,
     });
@@ -43,43 +43,33 @@ export function useHome() {
       updateStore({ count: { ...store.count, error: store.count.error + 1 } });
     }
 
-    cursorHandler(letterId + 1, store.cursorRef);
+    cursorHandler(letterId + 1, cursorRef);
 
     if (isComplete) onFinish();
   }
 
   function onFinish() {
     stopTimer();
-    if (store.letterRef) {
-      store.letterRef.current = document.getElementById("0") as HTMLLIElement;
+    if (letterRef) {
+      letterRef.current = document.getElementById("0") as HTMLLIElement;
     }
-    if (store.inputRef) {
-      store.inputRef.current.blur();
-      store.inputRef.current.disabled = true;
-    }
-    if (store.cursorRef) {
-      store.cursorRef.current.style.opacity = "0";
-      store.cursorRef.current.style.left = "0px";
-      store.cursorRef.current.style.top = "0px";
-    }
+    inputRef.current.blur();
+    inputRef.current.disabled = true;
+    cursorRef.current.style.opacity = "0";
+    cursorRef.current.style.left = "0px";
+    cursorRef.current.style.top = "0px";
     navigate(routes.score.path);
   }
 
   function onRestart() {
     resetStore();
     resetTimer();
-    cursorHandler(0, store.cursorRef);
+    cursorHandler(0, cursorRef);
     updateWords();
-    if (store.letterRef) {
-      store.letterRef.current = document.getElementById("-1") as HTMLLIElement;
-    }
-    if (store.inputRef) {
-      store.inputRef.current.disabled = false;
-      store.inputRef.current.focus();
-    }
-    if (store.cursorRef) {
-      store.cursorRef.current.style.opacity = "1";
-    }
+    letterRef.current = document.getElementById("-1") as HTMLLIElement;
+    inputRef.current.disabled = false;
+    inputRef.current.focus();
+    cursorRef.current.style.opacity = "1";
   }
 
   useEffect(() => {
@@ -90,8 +80,8 @@ export function useHome() {
   return {
     words: store.words,
     onKeyDown,
-    inputRef: store.inputRef as MutableRefObject<HTMLInputElement>,
-    cursorRef: store.cursorRef as MutableRefObject<HTMLDivElement>,
+    inputRef,
+    cursorRef,
     timerRef: store.timer.ref as MutableRefObject<HTMLDivElement>,
     timerSeconds: store.timer.countdown,
     onRestart,
